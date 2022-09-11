@@ -1,23 +1,53 @@
 import React from "react";
-import { useColorScheme } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { darkTheme, lightTheme } from "../../api/theme-constants";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MapScreen from "../screens/map-screen";
 import LocationsScreen from "../screens/locations-screen";
+import { useColorMode, useTheme } from "native-base";
+import { getThemeColors } from "../theme/theme";
+import SettingsScreen from "../screens/settings-screen";
+import { useLocationContext } from "../context/location-context";
+import LoadingScreen from "./LoadingScreen";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Icon } from "native-base";
 
 const Tab = createBottomTabNavigator();
 
 const Navigation = () => {
-  const colorScheme = useColorScheme();
+  const { colorMode } = useColorMode();
+  const theme = useTheme();
+  const { location } = useLocationContext();
   return (
     <NavigationContainer
-      theme={colorScheme === "dark" ? darkTheme : lightTheme}
+      theme={{
+        colors: getThemeColors(theme, colorMode),
+        dark: colorMode === "dark" ? true : false,
+      }}
     >
-      <Tab.Navigator>
-        <Tab.Screen name="Map" component={MapScreen} />
-        <Tab.Screen name="Locations" component={LocationsScreen} />
-      </Tab.Navigator>
+      {location ? (
+        <Tab.Navigator screenOptions={{ headerShown: false }}>
+          <Tab.Screen
+            name="Map"
+            component={MapScreen}
+            options={{
+              tabBarIcon: () => (
+                <Icon name="room" size={28} as={MaterialIcons} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{
+              tabBarIcon: () => (
+                <Icon name="settings" size={28} as={MaterialIcons} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      ) : (
+        <LoadingScreen />
+      )}
     </NavigationContainer>
   );
 };
