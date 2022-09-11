@@ -48,7 +48,7 @@ const MapScreen = () => {
         theme={theme}
         colorMode={colorMode}
       />
-      {location?.coords && (
+      {!location?.coords ? null : (
         <>
           <MapView
             onRegionChangeComplete={(region) => {
@@ -75,22 +75,23 @@ const MapScreen = () => {
               ...StyleSheet.absoluteFillObject,
             }}
           >
-            {places?.length &&
-              places.map((place) => {
-                return (
-                  <Marker
-                    identifier={place.id}
-                    coordinate={place.location}
-                    title={place.name}
-                    key={place.id}
-                    onPress={(e) => {
-                      setSelectedPlace(
-                        places.find((place) => place.id === e.nativeEvent.id)
-                      );
-                    }}
-                  />
-                );
-              })}
+            {!places?.length
+              ? null
+              : places.map((place) => {
+                  return (
+                    <Marker
+                      identifier={place.id}
+                      coordinate={place.location}
+                      title={place.name}
+                      key={place.id}
+                      onPress={(e) => {
+                        setSelectedPlace(
+                          places.find((place) => place.id === e.nativeEvent.id)
+                        );
+                      }}
+                    />
+                  );
+                })}
           </MapView>
           <HStack
             justifyContent="space-between"

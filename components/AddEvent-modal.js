@@ -62,7 +62,7 @@ const AddEventModal = ({ selectedPlace, setSelectedPlace, colorMode }) => {
                 <Popover.Header>
                   <TouchableOpacity
                     onPress={() => {
-                      if (name && time && eventType) {
+                      if (name && time) {
                         pushNewEvent(
                           { name, time: time.toISOString(), eventType },
                           selectedPlace.id,

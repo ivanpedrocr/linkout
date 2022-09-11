@@ -15,7 +15,9 @@ export const getNearbyPlaces = async (onFetch, onError, location, radius) => {
     res
       .json()
       .then((places) => {
-        onFetch?.(parseSearchResults(places.results));
+        if (onFetch) {
+          onFetch(parseSearchResults(places.results));
+        }
       })
       .catch((error) => {
         onError?.(error);
