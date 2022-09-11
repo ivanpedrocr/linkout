@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { getLocation } from "../../api/getLocation";
 import { useLocationContext } from "../context/location-context";
 import { ScreenContainer } from "../layout";
+import { getNearbyPlaces } from "../../api/getNearbyPlaces";
 
 const LoadingScreen = ({ navigation }) => {
   const { setLocation, setPlaces, setErr } = useLocationContext();
