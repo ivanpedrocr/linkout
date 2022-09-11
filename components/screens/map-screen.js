@@ -51,6 +51,7 @@ const MapScreen = () => {
       {!location?.coords ? null : (
         <>
           <MapView
+            showsScale
             onRegionChangeComplete={(region) => {
               setLocation({
                 coords: region,
@@ -133,7 +134,7 @@ const MapScreen = () => {
                         latitude: place.geometry.location.lat,
                         longitude: place.geometry.location.lng,
                       },
-                      1000
+                      (location?.coords?.latitudeDelta || 0.05) * 70 * 1000
                     );
                   });
                 } else {
@@ -144,7 +145,7 @@ const MapScreen = () => {
                       latitude: location.coords.latitude,
                       longitude: location.coords.longitude,
                     },
-                    1000
+                    (location?.coords?.latitudeDelta || 0.05) * 70 * 1000
                   );
                 }
               }}

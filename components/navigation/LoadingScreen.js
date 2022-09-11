@@ -18,7 +18,7 @@ const LoadingScreen = ({ navigation }) => {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
           },
-          1000
+          0.05 * 50 * 1000
         );
       },
       () =>
